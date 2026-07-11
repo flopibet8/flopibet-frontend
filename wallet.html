@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flopibet Wallet</title>
+    <link rel="icon" type="image/png" href="assets/flopibet-tab.png">
+    <link rel="apple-touch-icon" href="assets/flopibet-tab.png">
+    <meta name="description" content="TRON crypto wallet dashboard — manage your TRX and USDT assets, send, receive, and track your profits.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#0a0e1a',
+                        'brand-card': '#141828',
+                        'brand-surface': '#1c2140',
+                        'brand-border': '#2a2f4a',
+                        'brand-accent': '#6c5ce7',
+                        'brand-accent-light': '#a29bfe',
+                        'trx-red': '#ff0013',
+                        'usdt-green': '#26a17b',
+                        'ticker-bg': '#0d1117',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'ticker': 'ticker 50s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        ticker: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body class="bg-brand-dark min-h-screen font-sans text-white overflow-x-hidden">
+
+    <!-- ═══════════ CRYPTO PRICE TICKER ═══════════ -->
+    <div id="ticker-bar" class="w-full bg-ticker-bg border-b border-brand-border/50 overflow-hidden relative h-9 flex items-center">
+        <div class="ticker-track flex items-center animate-ticker whitespace-nowrap">
+            <!-- Content duplicated by JS for seamless loop -->
+        </div>
+    </div>
+
+    <!-- ═══════════ NAVIGATION BAR ═══════════ -->
+    <nav id="main-nav" class="w-full bg-brand-dark/80 backdrop-blur-xl border-b border-brand-border/40 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+            <!-- Logo + Name -->
+            <div class="flex items-center gap-3">
+                <div id="nav-logo" class="w-10 h-10 rounded-full overflow-hidden bg-[#14243a] flex items-center justify-center shadow-lg shadow-black/30 ring-2 ring-white/10">
+                    <img src="assets/flopibet%20logo.png" alt="Flopibet logo" class="w-full h-full object-cover" />
+                </div>
+                <span id="nav-brand-name" class="text-lg font-bold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Flopibet</span>
+            </div>
+
+            <!-- Nav Links -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="wallet.html" id="nav-wallet" class="nav-link active relative px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300">
+                    Wallet
+                </a>
+                <a href="history.html" id="nav-history" class="nav-link relative px-5 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white transition-all duration-300">
+                    History
+                </a>
+                <a href="referrals.html" id="nav-referrals" class="nav-link relative px-5 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white transition-all duration-300">
+                    Referrals
+                </a>
+            </div>
+
+            <!-- Balance & Logout -->
+            <div class="flex items-center gap-4">
+                <div id="nav-balance" class="hidden sm:flex items-center gap-2 bg-brand-surface/60 border border-brand-border/50 rounded-full px-5 py-2 backdrop-blur-sm">
+                    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                    <span class="text-xs text-gray-400 font-medium">Balance:</span>
+                    <span class="text-sm font-bold text-white flex items-center h-5">
+                        <svg class="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    </span>
+                </div>
+                <button onclick="siteLogout()" class="text-sm font-medium text-brand-accent-light hover:text-white transition-colors">Logout</button>
+                
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-400 hover:text-white transition-colors" aria-label="Toggle mobile menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden border-t border-brand-border/40 bg-brand-dark/95 backdrop-blur-xl">
+            <div class="px-4 py-3 space-y-1">
+                <a href="wallet.html" class="block px-4 py-2.5 rounded-lg text-sm font-semibold text-brand-accent-light bg-brand-accent/10">Wallet</a>
+                <a href="history.html" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-brand-surface/50 transition-colors">History</a>
+                <a href="referrals.html" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-brand-surface/50 transition-colors">Referrals</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════ MAIN CONTENT ═══════════ -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+
+        <!-- Wallet Card -->
+        <div id="wallet-card" class="wallet-card relative rounded-3xl overflow-hidden border border-brand-border/40 bg-brand-card p-6 sm:p-10">
+
+            <!-- Animated background pattern -->
+            <div class="pattern-overlay absolute inset-0 pointer-events-none opacity-[0.04]"></div>
+
+            <!-- Glowing orbs -->
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-trx-red/8 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Total Balance -->
+            <div class="wallet-balance-header relative z-10 text-center mb-8 sm:mb-10">
+                <p class="text-xs uppercase tracking-[0.2em] text-gray-500 font-medium mb-2">Total Balance</p>
+                <h1 id="total-balance" class="text-4xl sm:text-5xl font-black tracking-tight flex justify-center items-center min-h-[48px] sm:min-h-[56px]">
+                    <svg class="animate-spin h-8 w-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                </h1>
+            </div>
+
+            <!-- Send / Receive Buttons -->
+            <div class="wallet-actions-row relative z-10 flex items-center justify-center gap-8 sm:gap-16 -mt-1 sm:-mt-2 mb-7 sm:mb-10">
+                <button id="btn-send" class="action-btn group flex flex-col items-center gap-2 w-32 sm:w-auto" aria-label="Withdraw main balance">
+                    <div class="w-20 h-20 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-brand-surface to-brand-card border-2 border-brand-border/50 flex items-center justify-center shadow-xl group-hover:border-brand-accent/50 group-hover:shadow-brand-accent/20 transition-all duration-300 group-active:scale-95">
+                        <svg class="w-8 h-8 sm:w-8 sm:h-8 text-white group-hover:text-brand-accent-light transition-colors" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-7 7m7-7l7 7"/>
+                        </svg>
+                    </div>
+                    <span class="w-full text-center text-sm font-semibold text-white group-hover:text-brand-accent-light transition-colors leading-none">Withdraw</span>
+                    <span class="w-full text-center text-[11px] font-medium text-gray-500 -mt-1.5 leading-none">Main Balance</span>
+                </button>
+
+                <button id="btn-receive" class="action-btn group flex flex-col items-center gap-2 w-32 sm:w-auto" aria-label="Deposit crypto">
+                    <div class="w-20 h-20 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-brand-surface to-brand-card border-2 border-brand-border/50 flex items-center justify-center shadow-xl group-hover:border-emerald-500/50 group-hover:shadow-emerald-500/20 transition-all duration-300 group-active:scale-95">
+                        <svg class="w-8 h-8 sm:w-8 sm:h-8 text-white group-hover:text-emerald-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l7-7m-7 7l-7-7"/>
+                        </svg>
+                    </div>
+                    <span class="w-full text-center text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors leading-none">Deposit</span>
+                    <span class="invisible w-full text-center text-[11px] font-medium -mt-1.5 leading-none">Main Balance</span>
+                </button>
+            </div>
+
+    <!-- Withdraw Profit Modal -->
+    <div id="withdraw-profit-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeWithdrawProfitModal()"></div>
+        <div class="relative bg-brand-card border border-brand-border/40 rounded-3xl p-6 w-[90%] max-w-sm shadow-2xl transform scale-95 transition-transform duration-300">
+            
+            <div id="withdraw-profit-form-container">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-white">Withdraw Profit</h3>
+                    <button onclick="closeWithdrawProfitModal()" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                
+                <p class="text-sm text-gray-400 mb-4 text-center">Withdrawal amount is fixed at $200</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Tron Address</label>
+                        <input type="text" id="withdraw-profit-address" placeholder="T..." class="w-full bg-brand-surface border border-brand-border/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-accent transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Amount (USD)</label>
+                        <input type="number" id="withdraw-profit-amount" placeholder="200" min="200" max="200" step="0.01" class="w-full bg-brand-surface border border-brand-border/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-accent transition-colors">
+                    </div>
+                    <button onclick="submitWithdrawProfit()" id="withdraw-profit-submit-btn" class="w-full py-3 rounded-xl bg-brand-accent hover:bg-brand-accent-light text-white font-semibold shadow-lg shadow-brand-accent/20 transition-all">
+                        Withdraw
+                    </button>
+                </div>
+            </div>
+
+            <!-- Success Tick Animation Container -->
+            <div id="withdraw-profit-success" class="hidden flex-col items-center justify-center py-8">
+                <!-- Checkmark Animation SVG -->
+                <svg class="checkmark w-20 h-20 text-emerald-500 mb-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" stroke="currentColor" stroke-width="4"/>
+                    <path class="checkmark__check" fill="none" stroke="currentColor" stroke-width="4" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+                <h3 class="text-xl font-bold text-white mb-2">Success!</h3>
+                <p class="text-sm text-gray-400 text-center mb-6">Your transaction has been submitted.</p>
+                <button onclick="closeWithdrawProfitModal()" class="px-6 py-2 rounded-full border border-brand-border/50 text-white hover:bg-brand-surface transition-colors">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+            <!-- Stats Container -->
+            <div class="relative z-10 flex flex-col md:flex-row gap-6 mb-10">
+                <!-- Tokens Box -->
+                <div id="tokens-box" class="flex-1 flex flex-col gap-6 bg-brand-surface/50 border border-brand-border/30 rounded-2xl p-6 backdrop-blur-sm">
+                    <!-- TRX Token -->
+                    <div class="flex items-center gap-4 group">
+                        <img src="https://cryptologos.cc/logos/tron-trx-logo.svg" alt="TRX" class="w-11 h-11 drop-shadow-[0_0_8px_rgba(255,0,19,0.5)] group-hover:scale-110 transition-transform duration-300">
+                        <div>
+                            <p class="font-bold text-white text-sm">TRX</p>
+                            <p id="trx-balance" class="text-lg font-semibold text-gray-300 tabular-nums flex items-center h-7">
+                                <svg class="animate-spin h-4 w-4 text-gray-500 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Profits Box -->
+                <div class="flex-1 flex flex-col justify-center gap-4 bg-brand-surface/50 border border-brand-border/30 rounded-2xl p-6 backdrop-blur-sm">
+                    <!-- Profit Per Day -->
+                    <div class="flex flex-col items-center sm:items-end">
+                        <p class="text-xs text-gray-500 font-medium mb-1">Profit Per Day</p>
+                        <p id="trx-profit-day" class="text-2xl font-bold text-gray-300 tabular-nums flex items-center justify-end h-8">
+                            <svg class="animate-spin h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        </p>
+                    </div>
+                    <!-- Total Profit -->
+                    <div class="flex flex-col items-center sm:items-end">
+                        <p class="text-xs text-gray-500 font-medium mb-1">Total Profit</p>
+                        <p id="total-profit" class="text-2xl font-bold text-brand-accent-light tabular-nums flex items-center justify-end h-8">
+                            <svg class="animate-spin h-5 w-5 text-brand-accent-light" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        </p>
+                    </div>
+                    <!-- Withdraw Profit Button -->
+                    <div class="flex flex-col items-center sm:items-end mt-2">
+                        <button id="btn-withdraw-profit" class="px-4 py-2 bg-brand-accent hover:bg-brand-accent-light text-white rounded-lg text-sm font-semibold transition-colors shadow-lg shadow-brand-accent/20">
+                            Withdraw Profit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="border-t border-brand-border/30 mt-12 py-6">
+        <p class="text-center text-xs text-gray-600">&copy; 2026 Flopibet. All rights reserved.</p>
+    </footer>
+
+    <!-- ═══════════ RECEIVE MODAL ═══════════ -->
+    <div id="receive-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div id="receive-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0"></div>
+        
+        <!-- Modal Content -->
+        <div id="receive-modal-content" class="relative bg-brand-card border border-brand-border/60 rounded-3xl p-6 sm:p-8 w-full max-w-sm shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+            
+            <!-- Close Button -->
+            <button id="btn-close-receive" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-brand-surface rounded-full p-1.5 border border-brand-border/50">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold tracking-tight mb-1">Receive TRX</h3>
+                <p class="text-sm text-gray-400">Scan QR or copy address below</p>
+            </div>
+
+            <!-- QR Code Container -->
+            <div class="bg-white p-3 rounded-2xl mx-auto w-max mb-6 ring-4 ring-brand-surface shadow-xl">
+                <div id="qrcode" class="w-48 h-48 flex items-center justify-center"></div>
+            </div>
+
+            <!-- Address Display & Copy -->
+            <div class="bg-brand-surface/70 border border-brand-border/50 rounded-xl p-3 mb-2 flex items-center justify-between gap-2">
+                <p id="wallet-address-display" class="text-xs text-gray-300 font-mono truncate w-full tracking-wider">Loading...</p>
+                <button id="btn-copy-address" class="shrink-0 bg-brand-accent/20 hover:bg-brand-accent/40 text-brand-accent-light p-2 rounded-lg transition-colors border border-brand-accent/20" title="Copy Address">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-xs text-center text-red-400/80 font-medium bg-red-400/10 rounded-lg p-2 border border-red-400/20">
+                Send only TRC20 tokens to this address.
+            </p>
+        </div>
+    </div>
+
+    <script src="site-auth.js"></script>
+    <script src="wallet.js"></script>
+
+    <!-- Checkmark Animation Styles -->
+    <style>
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-miterlimit: 10;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</body>
+</html>
