@@ -98,7 +98,7 @@
                                 <span id="hero-typed-text" class="inline-block"></span><span class="hero-caret">|</span>
                             </h2>
                             <p class="text-sm sm:text-lg text-gray-300 leading-7 sm:leading-8 max-w-2xl">
-                                Flopibet is built for users who want a simple deposit-to-profit experience: choose a tier, earn daily profit, unlock referral rewards, and withdraw when your profit reaches the fixed $200 threshold.
+                                Flopibet is built for users who want a simple deposit-to-profit experience: choose a tier, earn daily profit, unlock referral rewards, and withdraw when your profit reaches your package's profit withdraw limit.
                             </p>
                         </div>
 
@@ -114,8 +114,8 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-2">
                             <div class="rounded-2xl border border-white/8 bg-white/5 backdrop-blur-md p-4 sm:p-5 reveal-on-scroll delay-1">
                                 <p class="text-sm text-gray-400">Withdraw profit</p>
-                                <p class="mt-2 text-xl sm:text-2xl font-bold">200$ fixed</p>
-                                <p class="mt-2 text-xs sm:text-sm text-gray-300 leading-6">Once your profit reaches 200$, the withdraw button unlocks and you can send exactly 200$ to any Tron address.</p>
+                                <p class="mt-2 text-xl sm:text-2xl font-bold">Package-based</p>
+                                <p class="mt-2 text-xs sm:text-sm text-gray-300 leading-6">The $250 plan unlocks $50 profit withdraw limit, while higher tiers have 200$ profit withdraw limits.</p>
                             </div>
                             <div class="rounded-2xl border border-white/8 bg-white/5 backdrop-blur-md p-4 sm:p-5 reveal-on-scroll delay-2">
                                 <p class="text-sm text-gray-400">Instant referral credit</p>
@@ -124,8 +124,8 @@
                             </div>
                             <div class="rounded-2xl border border-white/8 bg-white/5 backdrop-blur-md p-4 sm:p-5 reveal-on-scroll delay-3">
                                 <p class="text-sm text-gray-400">Referral reward by deposit</p>
-                                <p class="mt-2 text-xl sm:text-2xl font-bold">400$ | 800$ | 1600$</p>
-                                <p class="mt-2 text-xs sm:text-sm text-gray-300 leading-6">When your referred user deposits 400$, 800$, or 1600$, you receive 50$, 100$, or 150$ respectively.</p>
+                                <p class="mt-2 text-xl sm:text-2xl font-bold">250$ | 400$ | 800$ | 1600$</p>
+                                <p class="mt-2 text-xs sm:text-sm text-gray-300 leading-6">When your referred user deposits 250$, 400$, 800$, or 1600$, you receive 25$, 50$, 100$, or 150$ respectively.</p>
                             </div>
                             <div class="rounded-2xl border border-white/8 bg-white/5 backdrop-blur-md p-4 sm:p-5 reveal-on-scroll delay-3">
                                 <p class="text-sm text-gray-400">TRX token flow</p>
@@ -159,12 +159,12 @@
                             <div class="p-4 sm:p-6 space-y-3 sm:space-y-4">
                                 <div class="rounded-2xl bg-brand-surface/60 border border-white/5 p-4 sm:p-5 reveal-on-scroll">
                                     <p class="text-sm text-gray-400">How the plan reward works</p>
-                                    <p class="mt-2 text-sm sm:text-base font-semibold leading-6 sm:leading-7">A $400 plan gives about $3 per day, the $800 plan about $5 per day, and the $1600 plan about $8 per day.</p>
+                                    <p class="mt-2 text-sm sm:text-base font-semibold leading-6 sm:leading-7">A $250 plan gives about $1 per day, the $400 plan about $3 per day, the $800 plan about $5 per day, and the $1600 plan about $8 per day.</p>
                                 </div>
                                 <div class="grid sm:grid-cols-2 gap-3 sm:gap-4">
                                     <div class="rounded-2xl border border-white/5 bg-white/5 p-4 sm:p-5 reveal-on-scroll delay-1">
                                         <p class="text-sm text-gray-400">Referral reward rules</p>
-                                        <p class="mt-2 text-sm sm:text-base font-semibold leading-6 sm:leading-7">If your referred user deposits $400, you earn $50. At $800, you earn $100. At $1600, you earn $150.</p>
+                                        <p class="mt-2 text-sm sm:text-base font-semibold leading-6 sm:leading-7">If your referred user deposits $250, you earn $25. At $400, you earn $50. At $800, you earn $100. At $1600, you earn $150.</p>
                                     </div>
                                     <div class="rounded-2xl border border-white/5 bg-white/5 p-4 sm:p-5 reveal-on-scroll delay-2">
                                         <p class="text-sm text-gray-400">Instant referral bonus</p>
@@ -188,26 +188,59 @@
                     </p>
                 </div>
 
-                <div class="grid gap-4 sm:gap-6 md:grid-cols-3">
-                    <a href="signup.html" class="plan-card block rounded-[1.35rem] sm:rounded-[1.75rem] border border-brand-border/70 bg-brand-card/85 p-5 sm:p-7 reveal-on-scroll cursor-pointer transition-transform hover:-translate-y-1">
+                <div class="grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-4">
+                    <a href="signup.html" class="plan-card block rounded-[1.35rem] sm:rounded-[1.75rem] border border-brand-accent/40 bg-gradient-to-b from-brand-card to-brand-card/85 p-5 sm:p-7 reveal-on-scroll cursor-pointer transition-transform hover:-translate-y-1">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-gray-400">Starter</p>
-                                <h4 class="mt-1 text-xl sm:text-2xl font-bold">$400 Plan</h4>
+                                <p class="text-sm text-gray-400">Core</p>
+                                <h4 class="mt-1 text-lg sm:text-xl font-semibold">$250 Plan</h4>
                             </div>
                             <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-accent/15 border border-brand-accent/20 flex items-center justify-center text-brand-accent-light font-bold text-sm sm:text-base">1x</div>
                         </div>
                         <div class="mt-5 sm:mt-6 space-y-3 sm:space-y-4">
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Profit per day</p>
-                                <p class="mt-1 text-2xl sm:text-3xl font-extrabold">3$</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per day</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">1$</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Profit per month</p>
-                                <p class="mt-1 text-2xl sm:text-3xl font-extrabold">90$</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per month</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">30$</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Referral rewards included</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Referral reward</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">25$</p>
+                            </div>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit withdraw limit</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">50$</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="signup.html" class="plan-card block rounded-[1.35rem] sm:rounded-[1.75rem] border border-brand-border/70 bg-brand-card/85 p-5 sm:p-7 reveal-on-scroll cursor-pointer transition-transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-400">Starter</p>
+                                <h4 class="mt-1 text-lg sm:text-xl font-semibold">$400 Plan</h4>
+                            </div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-accent/15 border border-brand-accent/20 flex items-center justify-center text-brand-accent-light font-bold text-sm sm:text-base">3x</div>
+                        </div>
+                        <div class="mt-5 sm:mt-6 space-y-3 sm:space-y-4">
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per day</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">3$</p>
+                            </div>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per month</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">90$</p>
+                            </div>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Referral reward</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">50$</p>
+                            </div>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit withdraw limit</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">200$</p>
                             </div>
                         </div>
                     </a>
@@ -219,21 +252,26 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-400">Growth</p>
-                                <h4 class="mt-1 text-xl sm:text-2xl font-bold">$800 Plan</h4>
+                                <h4 class="mt-1 text-lg sm:text-xl font-semibold">$800 Plan</h4>
                             </div>
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-accent/15 border border-brand-accent/20 flex items-center justify-center text-brand-accent-light font-bold text-sm sm:text-base">2x</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-accent/15 border border-brand-accent/20 flex items-center justify-center text-brand-accent-light font-bold text-sm sm:text-base">5x</div>
                         </div>
                         <div class="mt-5 sm:mt-6 space-y-3 sm:space-y-4">
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Profit per day</p>
-                                <p class="mt-1 text-2xl sm:text-3xl font-extrabold">5$</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per day</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">5$</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Profit per month</p>
-                                <p class="mt-1 text-2xl sm:text-3xl font-extrabold">150$</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per month</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">150$</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Referral rewards included</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Referral reward</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">100$</p>
+                            </div>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit withdraw limit</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">200$</p>
                             </div>
                         </div>
                     </a>
@@ -242,21 +280,26 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-400">Elite</p>
-                                <h4 class="mt-1 text-xl sm:text-2xl font-bold">$1600 Plan</h4>
+                                <h4 class="mt-1 text-lg sm:text-xl font-semibold">$1600 Plan</h4>
                             </div>
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-gold/15 border border-brand-gold/20 flex items-center justify-center text-brand-gold font-bold text-sm sm:text-base">3x</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-brand-gold/15 border border-brand-gold/20 flex items-center justify-center text-brand-gold font-bold text-sm sm:text-base">8x</div>
                         </div>
                         <div class="mt-5 sm:mt-6 space-y-3 sm:space-y-4">
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Profit per day</p>
-                                <p class="mt-1 text-2xl sm:text-3xl font-extrabold">8$</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per day</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">8$</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Profit per month</p>
-                                <p class="mt-1 text-2xl sm:text-3xl font-extrabold">240$</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit per month</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">240$</p>
                             </div>
-                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3.5 sm:p-4">
-                                <p class="text-sm text-gray-400">Referral rewards included</p>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Referral reward</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">150$</p>
+                            </div>
+                            <div class="rounded-2xl bg-white/5 border border-white/5 p-3 sm:p-3.5">
+                                <p class="text-xs sm:text-sm text-gray-400">Profit withdraw limit</p>
+                                <p class="mt-1 text-xl sm:text-2xl font-semibold">200$</p>
                             </div>
                         </div>
                     </a>
@@ -317,7 +360,7 @@
                         <div class="space-y-3 reveal-on-scroll delay-2">
                             <p class="text-sm uppercase tracking-[0.28em] text-gray-400">03</p>
                             <h4 class="text-xl font-bold">Withdraw profit</h4>
-                            <p class="text-gray-300 leading-7">When profit reaches the fixed $200 withdrawal amount, send exactly $200 to any TRON address from your wallet flow.</p>
+                            <p class="text-gray-300 leading-7">When profit reaches your package withdrawal amount, send the exact limit from your wallet flow. The $250 plan unlocks $50 profit withdraw limit, while higher tiers have 200$ profit withdraw limits.</p>
                         </div>
                     </div>
                 </div>

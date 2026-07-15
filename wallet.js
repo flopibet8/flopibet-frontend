@@ -129,6 +129,43 @@ let currentUserProfile = null;
 let profitIntervalId = null;
 let currentTrxPrice = 0.1285;
 
+function formatUsdAmount(value) {
+    const amount = Number(value);
+    if (!Number.isFinite(amount)) return "0";
+    return Number.isInteger(amount) ? String(amount) : amount.toFixed(2);
+}
+
+function getWithdrawLimitUsd() {
+    if (Number(currentUserProfile?.profit_per_day) === 1) {
+        return 50;
+    }
+
+    const profileLimit = Number(currentUserProfile?.withdraw_profit_limit_usd);
+    if (Number.isFinite(profileLimit) && profileLimit > 0) {
+        return profileLimit;
+    }
+
+    return 200;
+}
+
+function syncWithdrawModalFields() {
+    const limit = getWithdrawLimitUsd();
+    const amountInput = document.getElementById('withdraw-profit-amount');
+    const note = document.getElementById('withdraw-profit-note');
+    const formattedLimit = formatUsdAmount(limit);
+
+    if (note) {
+        note.textContent = `Withdrawal amount is fixed at $${formattedLimit}`;
+    }
+
+    if (amountInput) {
+        amountInput.placeholder = formattedLimit;
+        amountInput.min = formattedLimit;
+        amountInput.max = formattedLimit;
+        amountInput.value = formattedLimit;
+    }
+}
+
 async function loadUserProfile(cryptoPrices) {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -161,6 +198,7 @@ async function loadUserProfile(cryptoPrices) {
             let profit = Math.max(dbProfit, cachedProfit);
             currentUserProfile.available_profit = profit;
             currentUserProfile.first_withdraw_done = Boolean(currentUserProfile.first_withdraw_done);
+            currentUserProfile.withdraw_profit_limit_usd = getWithdrawLimitUsd();
 
             const profitDay = currentUserProfile.profit_per_day || 0;
             
@@ -441,7 +479,7 @@ window.withdrawProfit = function() {
         document.getElementById('withdraw-profit-success').classList.remove('flex');
         
         document.getElementById('withdraw-profit-address').value = '';
-        document.getElementById('withdraw-profit-amount').value = '';
+        syncWithdrawModalFields();
         
         const btn = document.getElementById('withdraw-profit-submit-btn');
         btn.innerHTML = 'Withdraw';
@@ -476,13 +514,14 @@ window.submitWithdrawProfit = async function() {
     const amountUsd = parseFloat(amountStr);
     const normalizedAmountUsd = Math.round(amountUsd * 100) / 100;
     const availableProfit = getWithdrawableProfit();
+    const requiredAmount = Math.round(getWithdrawLimitUsd() * 100) / 100;
 
     if (!address) {
         showToast('Please enter a Tron address', 'error');
         return;
     }
-    if (isNaN(amountUsd) || normalizedAmountUsd !== 200) {
-        showToast('Withdrawal amount must be exactly $200', 'error');
+    if (isNaN(amountUsd) || normalizedAmountUsd !== requiredAmount) {
+        showToast(`Withdrawal amount must be exactly $${formatUsdAmount(requiredAmount)}`, 'error');
         return;
     }
     if (amountUsd > availableProfit) {
